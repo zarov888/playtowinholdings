@@ -86,7 +86,7 @@
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      margin-bottom:28px;
+      margin-bottom:22px;
     }
 
     .mark{
@@ -136,8 +136,16 @@
       letter-spacing: -0.6px;
     }
 
+    .sub{
+      margin:12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 70ch;
+    }
+
     .hr{
-      margin:26px 0;
+      margin:24px 0;
       height:1px;
       background: linear-gradient(90deg, transparent, var(--faint), transparent);
       border:0;
@@ -148,7 +156,6 @@
       gap:12px;
       flex-wrap:wrap;
       align-items:center;
-      margin-top: 18px;
     }
 
     .btn{
@@ -161,13 +168,12 @@
       font-weight: 600;
       letter-spacing: .2px;
       cursor:pointer;
-      transition: transform .08s ease, filter .2s ease, opacity .2s ease;
+      transition: transform .08s ease, filter .2s ease;
       box-shadow: 0 12px 30px rgba(178,27,59,.14);
       flex: 0 0 auto;
     }
     .btn:hover{filter:brightness(1.06)}
     .btn:active{transform: translateY(1px)}
-
     .btn.secondary{
       background: rgba(255,255,255,.03);
       border:1px solid var(--faint);
@@ -215,7 +221,7 @@
     .modalBackdrop.open{display:flex}
 
     .modal{
-      width:min(460px, 100%);
+      width:min(520px, 100%);
       border:1px solid var(--faint);
       border-radius: 18px;
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -260,7 +266,6 @@
     }
     .xBtn:hover{color: rgba(232,236,243,.95)}
 
-    /* login form bits */
     .modalForm{
       display:flex;
       flex-direction:column;
@@ -280,7 +285,7 @@
       font-size: 12px;
       color: rgba(232,236,243,.55);
     }
-    .modalField input{
+    .modalField input, .modalField textarea{
       width:100%;
       background: transparent;
       border:0;
@@ -288,8 +293,29 @@
       color: var(--ink);
       font-size:14px;
       padding: 4px 0;
+      resize: vertical;
+      min-height: 18px;
     }
-    .modalField input::placeholder{color: rgba(232,236,243,.45)}
+    .modalField textarea{min-height: 92px}
+    .modalField input::placeholder, .modalField textarea::placeholder{color: rgba(232,236,243,.45)}
+
+    .hint{
+      color: rgba(232,236,243,.48);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .status{
+      display:none;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: rgba(232,236,243,.62);
+    }
+    .status.show{display:block}
+    .status.ok{color: rgba(170, 255, 210, .85)}
+    .status.bad{color: rgba(255, 140, 160, .92)}
 
     .err{
       display:none;
@@ -300,9 +326,7 @@
     }
     .err.show{display:block}
 
-    .shake{
-      animation: shake .28s ease-in-out 0s 1;
-    }
+    .shake{ animation: shake .28s ease-in-out 0s 1; }
     @keyframes shake{
       0%{transform: translateX(0)}
       25%{transform: translateX(-6px)}
@@ -311,23 +335,8 @@
       100%{transform: translateX(0)}
     }
 
-    /* contact modal detail */
-    .contactBox{
-      border:1px solid var(--faint);
-      background: rgba(0,0,0,.18);
-      border-radius: 14px;
-      padding: 12px;
-      color: rgba(232,236,243,.78);
-      font-size: 14px;
-      line-height: 1.55;
-      word-break: break-word;
-    }
-    .mini{
-      color: rgba(232,236,243,.52);
-      font-size: 12px;
-      margin-top: 10px;
-      line-height: 1.45;
-    }
+    /* honeypot: hidden input for bots */
+    .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
   </style>
 </head>
 
@@ -341,13 +350,14 @@
             <div class="brand">Play To Win Holdings</div>
           </div>
 
-          <div class="ctaRow" style="margin-top:0;">
+          <div class="ctaRow">
             <button id="contactBtn" class="btn" type="button">Contact</button>
             <button id="loginBtn" class="btn secondary" type="button">Login</button>
           </div>
         </div>
 
         <h1>Play To Win Holdings</h1>
+        <p class="sub">Holding company.</p>
 
         <hr class="hr" />
 
@@ -359,7 +369,10 @@
 
     <footer>
       <div>Play To Win Holdings</div>
-      <div><a href="#" onclick="return false;">Privacy</a> • <a href="#" onclick="return false;">Terms</a></div>
+      <div>
+        <a href="/privacy.html">Privacy</a> •
+        <a href="/terms.html">Terms</a>
+      </div>
     </footer>
   </main>
 
@@ -372,18 +385,37 @@
           <button id="closeContact" class="xBtn" type="button" aria-label="Close">✕</button>
         </div>
 
-        <div class="contactBox">
-          contact@playtowinholdings.com
-        </div>
+        <form id="contactForm" class="modalForm">
+          <!-- honeypot (bots fill this; humans won't see it) -->
+          <div class="hp" aria-hidden="true">
+            <label>Company</label>
+            <input name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
 
-        <div class="ctaRow" style="margin-top:12px;">
-          <a class="btn" href="mailto:contact@playtowinholdings.com">Email</a>
-          <button id="copyEmail" class="btn secondary" type="button">Copy</button>
-        </div>
+          <div class="modalField">
+            <div class="label">Name</div>
+            <input name="name" type="text" placeholder="Your name" required />
+          </div>
 
-        <div class="mini">
-          (Messages are routed internally.)
-        </div>
+          <div class="modalField">
+            <div class="label">Email</div>
+            <input name="email" type="email" placeholder="you@email.com" required />
+          </div>
+
+          <div class="modalField">
+            <div class="label">Message</div>
+            <textarea name="message" placeholder="A short note…" required></textarea>
+          </div>
+
+          <input type="hidden" name="_subject" value="PlayToWinHoldings — New Inquiry" />
+
+          <button id="contactSubmit" class="btn" type="submit">Send</button>
+          <div id="contactStatus" class="status"></div>
+
+          <div class="hint">
+            Or email: <a href="mailto:contact@playtowinholdings.com">contact@playtowinholdings.com</a>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -416,9 +448,10 @@
   </div>
 
   <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mykjqdkj";
+
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Helpers
     function openModal(backdrop){
       backdrop.classList.add("open");
       backdrop.setAttribute("aria-hidden", "false");
@@ -432,19 +465,59 @@
     const contactBtn = document.getElementById("contactBtn");
     const contactBackdrop = document.getElementById("contactBackdrop");
     const closeContact = document.getElementById("closeContact");
-    const copyEmail = document.getElementById("copyEmail");
+    const contactForm = document.getElementById("contactForm");
+    const contactSubmit = document.getElementById("contactSubmit");
+    const contactStatus = document.getElementById("contactStatus");
 
-    contactBtn.addEventListener("click", () => openModal(contactBackdrop));
+    contactBtn.addEventListener("click", () => {
+      contactStatus.className = "status";
+      contactStatus.textContent = "";
+      contactForm.reset();
+      openModal(contactBackdrop);
+    });
+
     closeContact.addEventListener("click", () => closeModal(contactBackdrop));
     contactBackdrop.addEventListener("click", (e) => { if(e.target === contactBackdrop) closeModal(contactBackdrop); });
 
-    copyEmail.addEventListener("click", async () => {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // honeypot: if filled, quietly pretend success (bots)
+      const hp = contactForm.querySelector('input[name="company"]');
+      if (hp && hp.value.trim().length > 0) {
+        contactStatus.className = "status show ok";
+        contactStatus.textContent = "Sent.";
+        contactForm.reset();
+        return;
+      }
+
+      contactSubmit.disabled = true;
+      contactSubmit.style.opacity = ".7";
+      contactStatus.className = "status show";
+      contactStatus.textContent = "Sending…";
+
       try {
-        await navigator.clipboard.writeText("contact@playtowinholdings.com");
-        copyEmail.textContent = "Copied";
-        setTimeout(() => copyEmail.textContent = "Copy", 900);
-      } catch (_) {
-        // no-op
+        const formData = new FormData(contactForm);
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: formData
+        });
+
+        if (res.ok) {
+          contactStatus.className = "status show ok";
+          contactStatus.textContent = "Sent.";
+          contactForm.reset();
+        } else {
+          contactStatus.className = "status show bad";
+          contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
+        }
+      } catch (err) {
+        contactStatus.className = "status show bad";
+        contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
+      } finally {
+        contactSubmit.disabled = false;
+        contactSubmit.style.opacity = "1";
       }
     });
 
@@ -452,7 +525,7 @@
     const loginBtn = document.getElementById("loginBtn");
     const loginBackdrop = document.getElementById("loginBackdrop");
     const closeLogin = document.getElementById("closeLogin");
-    const form = document.getElementById("loginForm");
+    const loginForm = document.getElementById("loginForm");
     const err = document.getElementById("err");
     const modal = loginBackdrop.querySelector(".modal");
     const user = document.getElementById("user");
@@ -462,10 +535,11 @@
       openModal(loginBackdrop);
       setTimeout(() => user.focus(), 0);
     });
+
     closeLogin.addEventListener("click", () => closeModal(loginBackdrop));
     loginBackdrop.addEventListener("click", (e) => { if(e.target === loginBackdrop) closeModal(loginBackdrop); });
 
-    form.addEventListener("submit", (e) => {
+    loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
       err.classList.add("show");
       modal.classList.remove("shake");
@@ -482,3 +556,4 @@
   </script>
 </body>
 </html>
+
