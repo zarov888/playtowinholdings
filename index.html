@@ -6,10 +6,24 @@
   <title>Play To Win Holdings</title>
   <meta name="description" content="Play To Win Holdings" />
   <meta name="theme-color" content="#050608" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
+  <!-- Icons (add these files when ready) -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Play To Win Holdings" />
   <meta property="og:description" content="Play To Win Holdings" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://playtowinholdings.com/" />
+
+  <!-- Minimal structured data (silent credibility) -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Play To Win Holdings","url":"https://playtowinholdings.com"}
+  </script>
 
   <style>
     :root{
@@ -26,6 +40,7 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
+    html, body { overscroll-behavior-y: none; }
 
     body{
       margin:0;
@@ -38,8 +53,10 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       letter-spacing: .2px;
       overflow-x:hidden;
-      min-height: 100vh;  /* fallback */
-      min-height: 100svh; /* mobile safe viewport height */
+
+      /* mobile safe full-height */
+      min-height: 100vh;
+      min-height: 100svh;
     }
 
     /* subtle grain */
@@ -102,7 +119,7 @@
       min-width: 0;
     }
 
-    /* Larger logo */
+    /* bigger red square */
     .sigil{
       width:44px; height:44px;
       border-radius: 14px;
@@ -216,7 +233,11 @@
     a{color: rgba(232,236,243,.62); text-decoration:none}
     a:hover{color: rgba(232,236,243,.82)}
 
-    /* --- Modal shared --- */
+    /* actions: desktop in header, mobile below subtitle */
+    .actionsDesktop{display:flex}
+    .actionsMobile{display:none; margin-top:16px}
+
+    /* --- Modal shared (NO DRAG/BOUNCE) --- */
     .modalBackdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.62);
@@ -226,6 +247,10 @@
       justify-content:center;
       padding: 18px;
       z-index: 50;
+
+      /* key: prevent "dragging" / overscroll chaining */
+      overscroll-behavior: none;
+      touch-action: none;
     }
     .modalBackdrop.open{display:flex}
 
@@ -239,6 +264,10 @@
       box-shadow: 0 30px 90px rgba(0,0,0,.65);
       position:relative;
       -webkit-overflow-scrolling: touch;
+
+      /* key: allow only vertical scroll inside modal */
+      overscroll-behavior: contain;
+      touch-action: pan-y;
     }
     .modal:before{
       content:"";
@@ -301,7 +330,7 @@
       border:0;
       outline:0;
       color: var(--ink);
-      font-size:16px; /* prevent iOS zoom */
+      font-size:16px; /* prevents iOS zoom */
       padding: 6px 0;
       resize: vertical;
       min-height: 18px;
@@ -348,17 +377,10 @@
     /* honeypot */
     .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 
-    /* action rows: desktop in header, mobile under title */
-    .actionsDesktop{display:flex}
-    .actionsMobile{display:none; margin-top:16px}
-
     /* Mobile layout */
     @media (max-width: 640px){
       .wrap{padding:34px 14px; justify-content:flex-start;}
-      .frame{padding:20px}
-
-      /* make background feel full-screen even on short pages */
-      .frame{margin-top:18px; margin-bottom:18px}
+      .frame{padding:20px; margin:18px 0;}
 
       .top{
         flex-direction:column;
@@ -367,11 +389,11 @@
         margin-bottom:18px;
       }
 
-      /* bigger logo on mobile */
+      /* even bigger icon on mobile */
       .sigil{width:52px;height:52px;border-radius:16px}
       .brand{max-width: 100%}
 
-      /* hide header actions, show below subtitle */
+      /* move actions below subtitle */
       .actionsDesktop{display:none}
       .actionsMobile{display:flex; width:100%}
 
@@ -382,15 +404,10 @@
         padding: 13px 14px;
       }
 
-      footer{
-        padding: 14px 2px 0;
-        gap:6px;
-      }
-
+      footer{padding: 14px 2px 0; gap:6px;}
       body:before{opacity:.18}
     }
 
-    /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
       .sigil:after{animation:none}
       .btn{transition:none}
@@ -410,7 +427,7 @@
             <div class="brand">Play To Win Holdings</div>
           </div>
 
-          <!-- Desktop actions stay up here -->
+          <!-- Desktop actions -->
           <div class="ctaRow actionsDesktop">
             <button id="contactBtnDesktop" class="btn" type="button">Contact</button>
             <button id="loginBtnDesktop" class="btn secondary" type="button">Login</button>
@@ -420,7 +437,7 @@
         <h1>Play To Win Holdings</h1>
         <p class="sub">Holding company.</p>
 
-        <!-- Mobile actions appear below the subtitle -->
+        <!-- Mobile actions -->
         <div class="ctaRow actionsMobile">
           <button id="contactBtnMobile" class="btn" type="button">Contact</button>
           <button id="loginBtnMobile" class="btn secondary" type="button">Login</button>
@@ -453,6 +470,7 @@
         </div>
 
         <form id="contactForm" class="modalForm">
+          <!-- honeypot -->
           <div class="hp" aria-hidden="true">
             <label>Company</label>
             <input name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -517,21 +535,44 @@
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/mykjqdkj";
     document.getElementById("y").textContent = new Date().getFullYear();
 
+    // Real scroll lock (prevents mobile "dragging" the page behind modals)
+    let __scrollY = 0;
+    function lockScroll(){
+      __scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${__scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+    function unlockScroll(){
+      const y = __scrollY;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, y);
+    }
+
     function openModal(backdrop){
       backdrop.classList.add("open");
       backdrop.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
+      lockScroll();
     }
+
     function closeModal(backdrop){
       backdrop.classList.remove("open");
       backdrop.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
+      const anyOpen = document.querySelector(".modalBackdrop.open");
+      if (!anyOpen) unlockScroll();
     }
 
-    // elements
+    // Backdrops
     const contactBackdrop = document.getElementById("contactBackdrop");
     const loginBackdrop = document.getElementById("loginBackdrop");
 
+    // Buttons (desktop + mobile)
     const contactBtns = [
       document.getElementById("contactBtnDesktop"),
       document.getElementById("contactBtnMobile")
@@ -561,6 +602,7 @@
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // honeypot: if filled, pretend success (bots)
       const hp = contactForm.querySelector('input[name="company"]');
       if (hp && hp.value.trim().length > 0) {
         contactStatus.className = "status show ok";
