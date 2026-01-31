@@ -38,6 +38,8 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       letter-spacing: .2px;
       overflow-x:hidden;
+      min-height: 100vh;  /* fallback */
+      min-height: 100svh; /* mobile safe viewport height */
     }
 
     /* subtle grain */
@@ -51,7 +53,8 @@
     }
 
     .wrap{
-      min-height:100%;
+      min-height: 100vh;
+      min-height: 100svh;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -99,13 +102,14 @@
       min-width: 0;
     }
 
+    /* Larger logo */
     .sigil{
-      width:38px; height:38px;
-      border-radius: 12px;
+      width:44px; height:44px;
+      border-radius: 14px;
       border:1px solid var(--faint);
       background:
-        radial-gradient(14px 14px at 30% 30%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(135deg, rgba(122,15,37,.45), rgba(255,255,255,.02));
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(135deg, rgba(122,15,37,.55), rgba(255,255,255,.02));
       position:relative;
       overflow:hidden;
       flex: 0 0 auto;
@@ -227,8 +231,8 @@
 
     .modal{
       width:min(520px, 100%);
-      max-height: calc(100vh - 36px);
-      overflow:auto; /* key mobile fix */
+      max-height: calc(100svh - 36px);
+      overflow:auto;
       border:1px solid var(--faint);
       border-radius: 18px;
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -268,7 +272,7 @@
       background: rgba(0,0,0,.18);
       color: rgba(232,236,243,.78);
       border-radius: 12px;
-      padding: 10px 12px; /* bigger tap target */
+      padding: 10px 12px;
       cursor:pointer;
     }
 
@@ -297,7 +301,7 @@
       border:0;
       outline:0;
       color: var(--ink);
-      font-size:16px; /* mobile: prevents iOS zoom */
+      font-size:16px; /* prevent iOS zoom */
       padding: 6px 0;
       resize: vertical;
       min-height: 18px;
@@ -344,34 +348,45 @@
     /* honeypot */
     .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 
-    /* Mobile layout improvements */
+    /* action rows: desktop in header, mobile under title */
+    .actionsDesktop{display:flex}
+    .actionsMobile{display:none; margin-top:16px}
+
+    /* Mobile layout */
     @media (max-width: 640px){
-      .wrap{padding:34px 14px}
+      .wrap{padding:34px 14px; justify-content:flex-start;}
       .frame{padding:20px}
+
+      /* make background feel full-screen even on short pages */
+      .frame{margin-top:18px; margin-bottom:18px}
+
       .top{
         flex-direction:column;
         align-items:flex-start;
-        gap:14px;
+        gap:12px;
+        margin-bottom:18px;
       }
+
+      /* bigger logo on mobile */
+      .sigil{width:52px;height:52px;border-radius:16px}
       .brand{max-width: 100%}
 
-      /* top buttons go full width */
-      .ctaRow{width:100%}
-      .ctaRow .btn{
+      /* hide header actions, show below subtitle */
+      .actionsDesktop{display:none}
+      .actionsMobile{display:flex; width:100%}
+
+      .actionsMobile .btn{
         flex: 1 1 0;
         width: 100%;
         text-align:center;
         padding: 13px 14px;
-        border-radius: 14px;
       }
 
       footer{
-        width:min(980px, 100%);
         padding: 14px 2px 0;
         gap:6px;
       }
 
-      /* slightly lighter grain on phones */
       body:before{opacity:.18}
     }
 
@@ -388,20 +403,28 @@
   <main class="wrap">
     <section class="frame" aria-label="Play To Win Holdings landing">
       <div class="inner">
+
         <div class="top">
           <div class="mark">
             <div class="sigil" aria-hidden="true"></div>
             <div class="brand">Play To Win Holdings</div>
           </div>
 
-          <div class="ctaRow">
-            <button id="contactBtn" class="btn" type="button">Contact</button>
-            <button id="loginBtn" class="btn secondary" type="button">Login</button>
+          <!-- Desktop actions stay up here -->
+          <div class="ctaRow actionsDesktop">
+            <button id="contactBtnDesktop" class="btn" type="button">Contact</button>
+            <button id="loginBtnDesktop" class="btn secondary" type="button">Login</button>
           </div>
         </div>
 
         <h1>Play To Win Holdings</h1>
         <p class="sub">Holding company.</p>
+
+        <!-- Mobile actions appear below the subtitle -->
+        <div class="ctaRow actionsMobile">
+          <button id="contactBtnMobile" class="btn" type="button">Contact</button>
+          <button id="loginBtnMobile" class="btn secondary" type="button">Login</button>
+        </div>
 
         <hr class="hr" />
 
@@ -497,7 +520,7 @@
     function openModal(backdrop){
       backdrop.classList.add("open");
       backdrop.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden"; // prevents background scroll on mobile
+      document.body.style.overflow = "hidden";
     }
     function closeModal(backdrop){
       backdrop.classList.remove("open");
@@ -505,20 +528,32 @@
       document.body.style.overflow = "";
     }
 
-    // Contact modal
-    const contactBtn = document.getElementById("contactBtn");
+    // elements
     const contactBackdrop = document.getElementById("contactBackdrop");
+    const loginBackdrop = document.getElementById("loginBackdrop");
+
+    const contactBtns = [
+      document.getElementById("contactBtnDesktop"),
+      document.getElementById("contactBtnMobile")
+    ].filter(Boolean);
+
+    const loginBtns = [
+      document.getElementById("loginBtnDesktop"),
+      document.getElementById("loginBtnMobile")
+    ].filter(Boolean);
+
+    // Contact modal
     const closeContact = document.getElementById("closeContact");
     const contactForm = document.getElementById("contactForm");
     const contactSubmit = document.getElementById("contactSubmit");
     const contactStatus = document.getElementById("contactStatus");
 
-    contactBtn.addEventListener("click", () => {
+    contactBtns.forEach(btn => btn.addEventListener("click", () => {
       contactStatus.className = "status";
       contactStatus.textContent = "";
       contactForm.reset();
       openModal(contactBackdrop);
-    });
+    }));
 
     closeContact.addEventListener("click", () => closeModal(contactBackdrop));
     contactBackdrop.addEventListener("click", (e) => { if(e.target === contactBackdrop) closeModal(contactBackdrop); });
@@ -555,7 +590,7 @@
           contactStatus.className = "status show bad";
           contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
         }
-      } catch (err) {
+      } catch (_) {
         contactStatus.className = "status show bad";
         contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
       } finally {
@@ -565,19 +600,17 @@
     });
 
     // Login modal
-    const loginBtn = document.getElementById("loginBtn");
-    const loginBackdrop = document.getElementById("loginBackdrop");
     const closeLogin = document.getElementById("closeLogin");
     const loginForm = document.getElementById("loginForm");
     const err = document.getElementById("err");
     const modal = loginBackdrop.querySelector(".modal");
     const user = document.getElementById("user");
 
-    loginBtn.addEventListener("click", () => {
+    loginBtns.forEach(btn => btn.addEventListener("click", () => {
       err.classList.remove("show");
       openModal(loginBackdrop);
       setTimeout(() => user.focus(), 0);
-    });
+    }));
 
     closeLogin.addEventListener("click", () => closeModal(loginBackdrop));
     loginBackdrop.addEventListener("click", (e) => { if(e.target === loginBackdrop) closeModal(loginBackdrop); });
@@ -590,7 +623,7 @@
       modal.classList.add("shake");
     });
 
-    // ESC closes whichever is open
+    // ESC closes
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Escape") return;
       if (contactBackdrop.classList.contains("open")) closeModal(contactBackdrop);
