@@ -9,18 +9,27 @@
   <meta name="color-scheme" content="dark" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Icons (add these files when ready) -->
+  <link rel="canonical" href="https://playtowinholdings.com/" />
+
+  <!-- Icons (add files when ready) -->
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Play To Win Holdings" />
   <meta property="og:description" content="Play To Win Holdings" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://playtowinholdings.com/" />
+  <meta property="og:image" content="https://playtowinholdings.com/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Minimal structured data (silent credibility) -->
+  <!-- Silent structured data -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"Play To Win Holdings","url":"https://playtowinholdings.com"}
   </script>
@@ -50,11 +59,9 @@
         radial-gradient(700px 500px at 85% 70%, rgba(178,27,59,.10), transparent 60%),
         radial-gradient(900px 700px at 50% 120%, rgba(255,255,255,.03), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      letter-spacing: .2px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing: .1px;
       overflow-x:hidden;
-
-      /* mobile safe full-height */
       min-height: 100vh;
       min-height: 100svh;
     }
@@ -65,7 +72,7 @@
       position:fixed; inset:0;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
       mix-blend-mode:overlay;
-      opacity:.25;
+      opacity:.20;
       pointer-events:none;
     }
 
@@ -76,13 +83,13 @@
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      padding:56px 20px;
+      padding:52px 20px;
       position:relative;
     }
 
     .frame{
       width:min(980px, 100%);
-      padding:34px;
+      padding:28px;
       border:1px solid var(--faint);
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
@@ -104,29 +111,30 @@
 
     .inner{position:relative; z-index:1}
 
+    /* Top row */
     .top{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      margin-bottom:22px;
+      margin-bottom:18px;
     }
 
     .mark{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 0;
+      min-width:0;
     }
 
-    /* bigger red square */
+    /* Larger red square */
     .sigil{
-      width:44px; height:44px;
+      width:46px; height:46px;
       border-radius: 14px;
       border:1px solid var(--faint);
       background:
         radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(135deg, rgba(122,15,37,.55), rgba(255,255,255,.02));
+        linear-gradient(135deg, rgba(122,15,37,.60), rgba(255,255,255,.02));
       position:relative;
       overflow:hidden;
       flex: 0 0 auto;
@@ -137,26 +145,59 @@
       position:absolute; inset:0;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
       transform: translateX(-70%);
-      animation: sweep 6.5s ease-in-out infinite;
-      opacity:.45;
+      animation: sweep 7s ease-in-out infinite;
+      opacity:.40;
     }
 
     @keyframes sweep{
-      0%, 55% { transform: translateX(-70%); }
-      75% { transform: translateX(70%); }
+      0%, 60% { transform: translateX(-70%); }
+      82% { transform: translateX(70%); }
       100% { transform: translateX(70%); }
     }
 
     .brand{
       font-weight: 600;
-      letter-spacing: .6px;
+      letter-spacing: .8px;
       text-transform: uppercase;
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(232,236,243,.70);
       white-space: nowrap;
       overflow:hidden;
       text-overflow: ellipsis;
       max-width: 56vw;
+    }
+
+    /* Nav */
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav a{
+      color: rgba(232,236,243,.62);
+      text-decoration:none;
+      font-size: 12px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav a:hover{
+      color: rgba(232,236,243,.90);
+      background: rgba(255,255,255,.03);
+      border-color: var(--faint);
+    }
+    .nav a.active{
+      color: rgba(232,236,243,.92);
+      background: rgba(255,255,255,.03);
+      border-color: var(--faint);
     }
 
     h1{
@@ -168,40 +209,38 @@
 
     .sub{
       margin:12px 0 0;
-      color: var(--muted);
+      color: rgba(232,236,243,.66);
       font-size: 15px;
       line-height: 1.6;
       max-width: 70ch;
     }
 
-    .hr{
-      margin:24px 0;
-      height:1px;
-      background: linear-gradient(90deg, transparent, var(--faint), transparent);
-      border:0;
-    }
-
-    .ctaRow{
+    .actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
       align-items:center;
+      margin-top: 18px;
     }
 
     .btn{
       appearance:none;
       border:1px solid rgba(178,27,59,.45);
-      background: linear-gradient(135deg, rgba(122,15,37,.9), rgba(178,27,59,.75));
+      background: linear-gradient(135deg, rgba(122,15,37,.92), rgba(178,27,59,.76));
       color: #fff;
       padding: 12px 14px;
       border-radius: 14px;
       font-weight: 600;
+      font-size: 13px;
       letter-spacing: .2px;
       cursor:pointer;
       transition: transform .08s ease, filter .2s ease;
       box-shadow: 0 12px 30px rgba(178,27,59,.14);
-      flex: 0 0 auto;
       -webkit-tap-highlight-color: transparent;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
     }
     .btn:hover{filter:brightness(1.06)}
     .btn:active{transform: translateY(1px)}
@@ -209,13 +248,20 @@
       background: rgba(255,255,255,.03);
       border:1px solid var(--faint);
       box-shadow:none;
-      font-weight:500;
+      font-weight:600;
       color: var(--ink);
     }
 
+    .hr{
+      margin:22px 0;
+      height:1px;
+      background: linear-gradient(90deg, transparent, var(--faint), transparent);
+      border:0;
+    }
+
     .meta{
-      margin-top: 14px;
-      color: rgba(232,236,243,.52);
+      margin-top: 10px;
+      color: rgba(232,236,243,.48);
       font-size: 12px;
       line-height: 1.5;
     }
@@ -226,16 +272,12 @@
       justify-content:space-between;
       gap:10px;
       padding: 14px 6px 0;
-      color: rgba(232,236,243,.42);
+      color: rgba(232,236,243,.40);
       font-size:12px;
     }
 
-    a{color: rgba(232,236,243,.62); text-decoration:none}
-    a:hover{color: rgba(232,236,243,.82)}
-
-    /* actions: desktop in header, mobile below subtitle */
-    .actionsDesktop{display:flex}
-    .actionsMobile{display:none; margin-top:16px}
+    footer a{color: rgba(232,236,243,.58); text-decoration:none}
+    footer a:hover{color: rgba(232,236,243,.85)}
 
     /* --- Modal shared (NO DRAG/BOUNCE) --- */
     .modalBackdrop{
@@ -247,15 +289,13 @@
       justify-content:center;
       padding: 18px;
       z-index: 50;
-
-      /* key: prevent "dragging" / overscroll chaining */
       overscroll-behavior: none;
       touch-action: none;
     }
     .modalBackdrop.open{display:flex}
 
     .modal{
-      width:min(520px, 100%);
+      width:min(560px, 100%);
       max-height: calc(100svh - 36px);
       overflow:auto;
       border:1px solid var(--faint);
@@ -264,8 +304,6 @@
       box-shadow: 0 30px 90px rgba(0,0,0,.65);
       position:relative;
       -webkit-overflow-scrolling: touch;
-
-      /* key: allow only vertical scroll inside modal */
       overscroll-behavior: contain;
       touch-action: pan-y;
     }
@@ -289,10 +327,10 @@
       margin-bottom: 10px;
     }
     .modalTitle{
-      font-size: 14px;
-      letter-spacing:.6px;
+      font-size: 12px;
+      letter-spacing:.8px;
       text-transform:uppercase;
-      color: rgba(232,236,243,.72);
+      color: rgba(232,236,243,.74);
       margin:0;
     }
     .xBtn{
@@ -335,7 +373,7 @@
       resize: vertical;
       min-height: 18px;
     }
-    .modalField textarea{min-height: 110px}
+    .modalField textarea{min-height: 120px}
     .modalField input::placeholder, .modalField textarea::placeholder{color: rgba(232,236,243,.45)}
 
     .hint{
@@ -356,98 +394,65 @@
     .status.ok{color: rgba(170, 255, 210, .85)}
     .status.bad{color: rgba(255, 140, 160, .92)}
 
-    .err{
-      display:none;
-      margin-top: 8px;
-      color: rgba(255, 140, 160, .92);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-    .err.show{display:block}
-
-    .shake{ animation: shake .28s ease-in-out 0s 1; }
-    @keyframes shake{
-      0%{transform: translateX(0)}
-      25%{transform: translateX(-6px)}
-      50%{transform: translateX(6px)}
-      75%{transform: translateX(-4px)}
-      100%{transform: translateX(0)}
-    }
-
     /* honeypot */
     .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 
-    /* Mobile layout */
+    /* Mobile */
     @media (max-width: 640px){
       .wrap{padding:34px 14px; justify-content:flex-start;}
       .frame{padding:20px; margin:18px 0;}
+      .top{flex-direction:column; align-items:flex-start; gap:12px;}
+      .sigil{width:56px;height:56px;border-radius:18px}
+      .brand{max-width:100%}
 
-      .top{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:12px;
-        margin-bottom:18px;
-      }
+      .nav{justify-content:flex-start; gap:10px}
+      .nav a{padding:8px 10px}
 
-      /* even bigger icon on mobile */
-      .sigil{width:52px;height:52px;border-radius:16px}
-      .brand{max-width: 100%}
-
-      /* move actions below subtitle */
-      .actionsDesktop{display:none}
-      .actionsMobile{display:flex; width:100%}
-
-      .actionsMobile .btn{
-        flex: 1 1 0;
-        width: 100%;
+      .actions .btn{
+        flex:1 1 0;
+        width:100%;
         text-align:center;
         padding: 13px 14px;
       }
-
-      footer{padding: 14px 2px 0; gap:6px;}
-      body:before{opacity:.18}
     }
 
     @media (prefers-reduced-motion: reduce){
       .sigil:after{animation:none}
       .btn{transition:none}
-      .shake{animation:none}
     }
   </style>
 </head>
 
 <body>
   <main class="wrap">
-    <section class="frame" aria-label="Play To Win Holdings landing">
+    <section class="frame" aria-label="Play To Win Holdings">
       <div class="inner">
-
         <div class="top">
           <div class="mark">
             <div class="sigil" aria-hidden="true"></div>
             <div class="brand">Play To Win Holdings</div>
           </div>
 
-          <!-- Desktop actions -->
-          <div class="ctaRow actionsDesktop">
-            <button id="contactBtnDesktop" class="btn" type="button">Contact</button>
-            <button id="loginBtnDesktop" class="btn secondary" type="button">Login</button>
-          </div>
+          <nav class="nav" aria-label="Primary">
+            <a class="active" href="/">Home</a>
+            <a href="/updates.html">Updates</a>
+            <a href="/legal.html">Legal</a>
+            <a href="#" id="navContact">Contact</a>
+            <a href="/portal.html">Portal</a>
+          </nav>
         </div>
 
         <h1>Play To Win Holdings</h1>
-        <p class="sub">Invest. Build. Hold.</p>
+        <p class="sub">Holding company.</p>
 
-        <!-- Mobile actions -->
-        <div class="ctaRow actionsMobile">
-          <button id="contactBtnMobile" class="btn" type="button">Contact</button>
-          <button id="loginBtnMobile" class="btn secondary" type="button">Login</button>
+        <div class="actions">
+          <button id="contactBtn" class="btn" type="button">Contact</button>
+          <a class="btn secondary" href="/portal.html">Portal</a>
         </div>
 
         <hr class="hr" />
 
-        <div class="meta">
-          © <span id="y"></span> Play To Win Holdings
-        </div>
+        <div class="meta">© <span id="y"></span> Play To Win Holdings</div>
       </div>
     </section>
 
@@ -470,7 +475,6 @@
         </div>
 
         <form id="contactForm" class="modalForm">
-          <!-- honeypot -->
           <div class="hp" aria-hidden="true">
             <label>Company</label>
             <input name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -504,38 +508,11 @@
     </div>
   </div>
 
-  <!-- Login Modal (always invalid) -->
-  <div id="loginBackdrop" class="modalBackdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <div class="modalInner">
-        <div class="modalHeader">
-          <h2 class="modalTitle" id="loginTitle">Login</h2>
-          <button id="closeLogin" class="xBtn" type="button" aria-label="Close">✕</button>
-        </div>
-
-        <form id="loginForm" class="modalForm">
-          <div class="modalField">
-            <div class="label">Username</div>
-            <input id="user" type="text" autocomplete="username" placeholder="Username" required />
-          </div>
-
-          <div class="modalField">
-            <div class="label">Password</div>
-            <input id="pass" type="password" autocomplete="current-password" placeholder="Password" required />
-          </div>
-
-          <button class="btn" type="submit">Sign in</button>
-          <div id="err" class="err">Invalid credentials.</div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/mykjqdkj";
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Real scroll lock (prevents mobile "dragging" the page behind modals)
+    // Real scroll lock (prevents mobile drag / bounce)
     let __scrollY = 0;
     function lockScroll(){
       __scrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -560,7 +537,6 @@
       backdrop.setAttribute("aria-hidden", "false");
       lockScroll();
     }
-
     function closeModal(backdrop){
       backdrop.classList.remove("open");
       backdrop.setAttribute("aria-hidden", "true");
@@ -568,33 +544,23 @@
       if (!anyOpen) unlockScroll();
     }
 
-    // Backdrops
     const contactBackdrop = document.getElementById("contactBackdrop");
-    const loginBackdrop = document.getElementById("loginBackdrop");
-
-    // Buttons (desktop + mobile)
-    const contactBtns = [
-      document.getElementById("contactBtnDesktop"),
-      document.getElementById("contactBtnMobile")
-    ].filter(Boolean);
-
-    const loginBtns = [
-      document.getElementById("loginBtnDesktop"),
-      document.getElementById("loginBtnMobile")
-    ].filter(Boolean);
-
-    // Contact modal
+    const contactBtn = document.getElementById("contactBtn");
+    const navContact = document.getElementById("navContact");
     const closeContact = document.getElementById("closeContact");
     const contactForm = document.getElementById("contactForm");
     const contactSubmit = document.getElementById("contactSubmit");
     const contactStatus = document.getElementById("contactStatus");
 
-    contactBtns.forEach(btn => btn.addEventListener("click", () => {
+    function openContact(){
       contactStatus.className = "status";
       contactStatus.textContent = "";
       contactForm.reset();
       openModal(contactBackdrop);
-    }));
+    }
+
+    contactBtn.addEventListener("click", openContact);
+    navContact.addEventListener("click", (e) => { e.preventDefault(); openContact(); });
 
     closeContact.addEventListener("click", () => closeModal(contactBackdrop));
     contactBackdrop.addEventListener("click", (e) => { if(e.target === contactBackdrop) closeModal(contactBackdrop); });
@@ -602,7 +568,6 @@
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // honeypot: if filled, pretend success (bots)
       const hp = contactForm.querySelector('input[name="company"]');
       if (hp && hp.value.trim().length > 0) {
         contactStatus.className = "status show ok";
@@ -612,7 +577,7 @@
       }
 
       contactSubmit.disabled = true;
-      contactSubmit.style.opacity = ".7";
+      contactSubmit.style.opacity = ".75";
       contactStatus.className = "status show";
       contactStatus.textContent = "Sending…";
 
@@ -641,35 +606,9 @@
       }
     });
 
-    // Login modal
-    const closeLogin = document.getElementById("closeLogin");
-    const loginForm = document.getElementById("loginForm");
-    const err = document.getElementById("err");
-    const modal = loginBackdrop.querySelector(".modal");
-    const user = document.getElementById("user");
-
-    loginBtns.forEach(btn => btn.addEventListener("click", () => {
-      err.classList.remove("show");
-      openModal(loginBackdrop);
-      setTimeout(() => user.focus(), 0);
-    }));
-
-    closeLogin.addEventListener("click", () => closeModal(loginBackdrop));
-    loginBackdrop.addEventListener("click", (e) => { if(e.target === loginBackdrop) closeModal(loginBackdrop); });
-
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      err.classList.add("show");
-      modal.classList.remove("shake");
-      void modal.offsetWidth;
-      modal.classList.add("shake");
-    });
-
-    // ESC closes
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Escape") return;
       if (contactBackdrop.classList.contains("open")) closeModal(contactBackdrop);
-      if (loginBackdrop.classList.contains("open")) closeModal(loginBackdrop);
     });
   </script>
 </body>
