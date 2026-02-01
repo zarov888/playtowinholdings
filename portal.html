@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Play To Win Holdings</title>
+  <meta name="description" content="Play To Win Holdings" />
+  <meta name="theme-color" content="#050608" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <link rel="canonical" href="https://playtowinholdings.com/" />
+
+  <!-- Icons (add files when ready) -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Play To Win Holdings" />
+  <meta property="og:description" content="Play To Win Holdings" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://playtowinholdings.com/" />
+  <meta property="og:image" content="https://playtowinholdings.com/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Silent structured data -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"Play To Win Holdings","url":"https://playtowinholdings.com"}
+  </script>
+
+  <style>
+    :root{
+      --bg0:#050608;
+      --bg1:#0a0c10;
+      --ink:#e8ecf3;
+      --muted:rgba(232,236,243,.68);
+      --faint:rgba(232,236,243,.14);
+      --accent:#7a0f25;
+      --accent2:#b21b3b;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html, body { overscroll-behavior-y: none; }
+
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 600px at 20% 15%, rgba(122,15,37,.18), transparent 55%),
+        radial-gradient(700px 500px at 85% 70%, rgba(178,27,59,.10), transparent 60%),
+        radial-gradient(900px 700px at 50% 120%, rgba(255,255,255,.03), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing: .1px;
+      overflow-x:hidden;
+      min-height: 100vh;
+      min-height: 100svh;
+    }
+
+    /* subtle grain */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.20;
+      pointer-events:none;
+    }
+
+    .wrap{
+      min-height: 100vh;
+      min-height: 100svh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:52px 20px;
+      position:relative;
+    }
+
+    .frame{
+      width:min(980px, 100%);
+      padding:28px;
+      border:1px solid var(--faint);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .frame:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 300px at 10% 0%, rgba(122,15,37,.18), transparent 55%),
+        radial-gradient(500px 250px at 90% 100%, rgba(178,27,59,.10), transparent 55%);
+      filter: blur(10px);
+      opacity:.65;
+      pointer-events:none;
+    }
+
+    .inner{position:relative; z-index:1}
+
+    /* Top row */
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .mark{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    /* Larger red square */
+    .sigil{
+      width:46px; height:46px;
+      border-radius: 14px;
+      border:1px solid var(--faint);
+      background:
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(135deg, rgba(122,15,37,.60), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+
+    .sigil:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);
+      transform: translateX(-70%);
+      animation: sweep 7s ease-in-out infinite;
+      opacity:.40;
+    }
+
+    @keyframes sweep{
+      0%, 60% { transform: translateX(-70%); }
+      82% { transform: translateX(70%); }
+      100% { transform: translateX(70%); }
+    }
+
+    .brand{
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(232,236,243,.70);
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 56vw;
+    }
+
+    /* Nav */
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav a{
+      color: rgba(232,236,243,.62);
+      text-decoration:none;
+      font-size: 12px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav a:hover{
+      color: rgba(232,236,243,.90);
+      background: rgba(255,255,255,.03);
+      border-color: var(--faint);
+    }
+    .nav a.active{
+      color: rgba(232,236,243,.92);
+      background: rgba(255,255,255,.03);
+      border-color: var(--faint);
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(30px, 6vw, 56px);
+      line-height:1.05;
+      letter-spacing: -0.6px;
+    }
+
+    .sub{
+      margin:12px 0 0;
+      color: rgba(232,236,243,.66);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 70ch;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 18px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(178,27,59,.45);
+      background: linear-gradient(135deg, rgba(122,15,37,.92), rgba(178,27,59,.76));
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .2px;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease;
+      box-shadow: 0 12px 30px rgba(178,27,59,.14);
+      -webkit-tap-highlight-color: transparent;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .btn:hover{filter:brightness(1.06)}
+    .btn:active{transform: translateY(1px)}
+    .btn.secondary{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--faint);
+      box-shadow:none;
+      font-weight:600;
+      color: var(--ink);
+    }
+
+    .hr{
+      margin:22px 0;
+      height:1px;
+      background: linear-gradient(90deg, transparent, var(--faint), transparent);
+      border:0;
+    }
+
+    .meta{
+      margin-top: 10px;
+      color: rgba(232,236,243,.48);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    footer{
+      width:min(980px, 100%);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding: 14px 6px 0;
+      color: rgba(232,236,243,.40);
+      font-size:12px;
+    }
+
+    footer a{color: rgba(232,236,243,.58); text-decoration:none}
+    footer a:hover{color: rgba(232,236,243,.85)}
+
+    /* --- Modal shared (NO DRAG/BOUNCE) --- */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+    .modalBackdrop.open{display:flex}
+
+    .modal{
+      width:min(560px, 100%);
+      max-height: calc(100svh - 36px);
+      overflow:auto;
+      border:1px solid var(--faint);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: 0 30px 90px rgba(0,0,0,.65);
+      position:relative;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+    }
+    .modal:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 220px at 15% 0%, rgba(122,15,37,.20), transparent 60%),
+        radial-gradient(420px 220px at 95% 100%, rgba(178,27,59,.12), transparent 60%);
+      filter: blur(12px);
+      opacity:.7;
+      pointer-events:none;
+    }
+
+    .modalInner{position:relative; z-index:1; padding:18px 18px 16px;}
+    .modalHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .modalTitle{
+      font-size: 12px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      color: rgba(232,236,243,.74);
+      margin:0;
+    }
+    .xBtn{
+      appearance:none;
+      border:1px solid var(--faint);
+      background: rgba(0,0,0,.18);
+      color: rgba(232,236,243,.78);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+    }
+
+    .modalForm{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .modalField{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      border:1px solid var(--faint);
+      background: rgba(0,0,0,.18);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .label{
+      font-size: 12px;
+      color: rgba(232,236,243,.55);
+    }
+    .modalField input, .modalField textarea{
+      width:100%;
+      background: transparent;
+      border:0;
+      outline:0;
+      color: var(--ink);
+      font-size:16px; /* prevents iOS zoom */
+      padding: 6px 0;
+      resize: vertical;
+      min-height: 18px;
+    }
+    .modalField textarea{min-height: 120px}
+    .modalField input::placeholder, .modalField textarea::placeholder{color: rgba(232,236,243,.45)}
+
+    .hint{
+      color: rgba(232,236,243,.48);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .status{
+      display:none;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: rgba(232,236,243,.62);
+    }
+    .status.show{display:block}
+    .status.ok{color: rgba(170, 255, 210, .85)}
+    .status.bad{color: rgba(255, 140, 160, .92)}
+
+    /* honeypot */
+    .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+    /* Mobile */
+    @media (max-width: 640px){
+      .wrap{padding:34px 14px; justify-content:flex-start;}
+      .frame{padding:20px; margin:18px 0;}
+      .top{flex-direction:column; align-items:flex-start; gap:12px;}
+      .sigil{width:56px;height:56px;border-radius:18px}
+      .brand{max-width:100%}
+
+      .nav{justify-content:flex-start; gap:10px}
+      .nav a{padding:8px 10px}
+
+      .actions .btn{
+        flex:1 1 0;
+        width:100%;
+        text-align:center;
+        padding: 13px 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .sigil:after{animation:none}
+      .btn{transition:none}
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="frame" aria-label="Play To Win Holdings">
+      <div class="inner">
+        <div class="top">
+          <div class="mark">
+            <div class="sigil" aria-hidden="true"></div>
+            <div class="brand">Play To Win Holdings</div>
+          </div>
+
+          <nav class="nav" aria-label="Primary">
+            <a class="active" href="/">Home</a>
+            <a href="/updates.html">Updates</a>
+            <a href="/legal.html">Legal</a>
+            <a href="#" id="navContact">Contact</a>
+            <a href="/portal.html">Portal</a>
+          </nav>
+        </div>
+
+        <h1>Play To Win Holdings</h1>
+        <p class="sub">Holding company.</p>
+
+        <div class="actions">
+          <button id="contactBtn" class="btn" type="button">Contact</button>
+          <a class="btn secondary" href="/portal.html">Portal</a>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="meta">© <span id="y"></span> Play To Win Holdings</div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Play To Win Holdings</div>
+      <div>
+        <a href="/privacy.html">Privacy</a> •
+        <a href="/terms.html">Terms</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Contact Modal -->
+  <div id="contactBackdrop" class="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <div class="modalInner">
+        <div class="modalHeader">
+          <h2 class="modalTitle" id="contactTitle">Contact</h2>
+          <button id="closeContact" class="xBtn" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <form id="contactForm" class="modalForm">
+          <div class="hp" aria-hidden="true">
+            <label>Company</label>
+            <input name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="modalField">
+            <div class="label">Name</div>
+            <input name="name" type="text" placeholder="Your name" required />
+          </div>
+
+          <div class="modalField">
+            <div class="label">Email</div>
+            <input name="email" type="email" placeholder="you@email.com" required />
+          </div>
+
+          <div class="modalField">
+            <div class="label">Message</div>
+            <textarea name="message" placeholder="A short note…" required></textarea>
+          </div>
+
+          <input type="hidden" name="_subject" value="PlayToWinHoldings — New Inquiry" />
+
+          <button id="contactSubmit" class="btn" type="submit">Send</button>
+          <div id="contactStatus" class="status"></div>
+
+          <div class="hint">
+            Or email: <a href="mailto:contact@playtowinholdings.com">contact@playtowinholdings.com</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mykjqdkj";
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Real scroll lock (prevents mobile drag / bounce)
+    let __scrollY = 0;
+    function lockScroll(){
+      __scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${__scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+    function unlockScroll(){
+      const y = __scrollY;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, y);
+    }
+
+    function openModal(backdrop){
+      backdrop.classList.add("open");
+      backdrop.setAttribute("aria-hidden", "false");
+      lockScroll();
+    }
+    function closeModal(backdrop){
+      backdrop.classList.remove("open");
+      backdrop.setAttribute("aria-hidden", "true");
+      const anyOpen = document.querySelector(".modalBackdrop.open");
+      if (!anyOpen) unlockScroll();
+    }
+
+    const contactBackdrop = document.getElementById("contactBackdrop");
+    const contactBtn = document.getElementById("contactBtn");
+    const navContact = document.getElementById("navContact");
+    const closeContact = document.getElementById("closeContact");
+    const contactForm = document.getElementById("contactForm");
+    const contactSubmit = document.getElementById("contactSubmit");
+    const contactStatus = document.getElementById("contactStatus");
+
+    function openContact(){
+      contactStatus.className = "status";
+      contactStatus.textContent = "";
+      contactForm.reset();
+      openModal(contactBackdrop);
+    }
+
+    contactBtn.addEventListener("click", openContact);
+    navContact.addEventListener("click", (e) => { e.preventDefault(); openContact(); });
+
+    closeContact.addEventListener("click", () => closeModal(contactBackdrop));
+    contactBackdrop.addEventListener("click", (e) => { if(e.target === contactBackdrop) closeModal(contactBackdrop); });
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const hp = contactForm.querySelector('input[name="company"]');
+      if (hp && hp.value.trim().length > 0) {
+        contactStatus.className = "status show ok";
+        contactStatus.textContent = "Sent.";
+        contactForm.reset();
+        return;
+      }
+
+      contactSubmit.disabled = true;
+      contactSubmit.style.opacity = ".75";
+      contactStatus.className = "status show";
+      contactStatus.textContent = "Sending…";
+
+      try {
+        const formData = new FormData(contactForm);
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: formData
+        });
+
+        if (res.ok) {
+          contactStatus.className = "status show ok";
+          contactStatus.textContent = "Sent.";
+          contactForm.reset();
+        } else {
+          contactStatus.className = "status show bad";
+          contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
+        }
+      } catch (_) {
+        contactStatus.className = "status show bad";
+        contactStatus.textContent = "Could not send. Please email contact@playtowinholdings.com.";
+      } finally {
+        contactSubmit.disabled = false;
+        contactSubmit.style.opacity = "1";
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      if (contactBackdrop.classList.contains("open")) closeModal(contactBackdrop);
+    });
+  </script>
+</body>
+</html>
